@@ -1,23 +1,32 @@
+import * as types from '../constants/action-types';
+
 export const initialState = {
   books: [],
+  lists: [],
   saved: [],
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'books_loaded':
+    case types.BOOKS_LOADED:
       return { ...state, books: action.books };
-    case 'book_added':
+    case types.BOOKS_LOAD_ERROR:
+      return { ...state, error: action.error };
+    case types.LISTS_LOADED:
+      return { ...state, lists: action.lists };
+    case types.LISTS_LOAD_ERROR:
+      return { ...state, error: action.error };
+    case types.BOOK_ADDED:
       return {
         ...state,
         saved: [...state.saved, action.book],
       };
-    case 'book_saved_from_list':
+    case types.BOOK_SAVED_FROM_LIST:
       return {
         ...state,
         saved: [...state.saved, action.book],
       };
-    case 'book_removed': {
+    case types.BOOK_REMOVED: {
       const indexToRemove = state.saved.findIndex(
         ({ id }) => id === action.book.id
       );

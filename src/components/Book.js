@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 
 import { Link } from '@reach/router';
 import { SaveButton } from './Buttons';
+import BookCover from './BookCover';
 
 const Anchor = styled(Link)`
   text-decoration: none;
@@ -13,19 +14,6 @@ const Anchor = styled(Link)`
 
 const Details = styled.section`
   flex: 1;
-`;
-
-const Cover = styled.div`
-  width: 150px;
-  height: 280px;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  & > a > img {
-    max-width: 100%;
-    max-height: 240px;
-    display: block;
-  }
 `;
 
 const Wrapper = styled.article`
@@ -41,7 +29,7 @@ const Wrapper = styled.article`
         align-items: flex-start;
         width: 100%;
         padding: 10px;
-        ${Cover} {
+        ${BookCover} {
             margin-right: 78px;
         }
       `;
@@ -88,19 +76,19 @@ const Description = styled.p`
 `;
 
 export default function Book({ book, onSave, onRemove, saved, view }) {
+  const { id, book_image: bookImage, title, author, description } = book;
+
   return (
-    <Wrapper key={book.id} view={view}>
-      <Cover>
-        <Anchor to={`/books/${book.id}`}>
-          <img src={book.image_url} alt={book.title} />
-        </Anchor>
-      </Cover>
+    <Wrapper key={id} view={view}>
+      <Anchor to={`/books/${id}`}>
+        <BookCover imgUrl={bookImage} alt={title} size="sm" />
+      </Anchor>
       <Details>
         <Title>
-          <Anchor to={`/books/${book.id}`}>{book.title.toLowerCase()}</Anchor>
+          <Anchor to={`/books/${id}`}>{title.toLowerCase()}</Anchor>
         </Title>
-        <Author>{book.author}</Author>
-        {view === 'list' && <Description>{book.description}</Description>}
+        <Author>{author}</Author>
+        {view === 'list' && <Description>{description}</Description>}
         <SaveButton onSave={onSave} onRemove={onRemove} saved={saved} />
       </Details>
     </Wrapper>

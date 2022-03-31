@@ -23,10 +23,8 @@ export function App(props) {
       <Router>
         <Overview {...props} path="/*listName" />
         <BookDetails {...props} path="books/:bookId" />
-
         <Bookshelf books={saved} actions={actions} saved={saved} path="saved" />
         <BookDetails actions={actions} books={saved} path="saved/:bookId" />
-
         <AddBook actions={actions} path="books/new" />
       </Router>
     </>

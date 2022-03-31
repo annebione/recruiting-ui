@@ -3,28 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import Page from 'components/Page';
-import Icon from 'components/Icon';
 import { SaveButton } from 'components/Buttons';
+import BookCover from 'components/BookCover';
 
-const Cover = styled.div`
-  width: 240px;
-  height: 360px;
-  margin: 0 100px 18px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  order: 1;
-  flex-direction: column;
-  background-color: #e7ecf3;
-  & > img {
-    max-width: 100%;
-    display: block;
-  }
-  ${Icon} {
-    font-size: 40px;
-    color: #7e89a9;
-  }
-`;
+import { getBookDetails } from 'utils/get-book-details';
 
 const Author = styled.p`
   font-size: 18px;
@@ -66,18 +48,10 @@ const StyledSaveButton = styled(SaveButton)`
 `;
 
 export default function BookDetails({ books, bookId, actions, saved }) {
-  let book = saved.find(({ id }) => id === bookId);
-  const isSaved = !!book;
+  const book = getBookDetails(saved, books, bookId);
 
-  if (books) {
-    const fullBook = books.find(({ primary_isbn13: id }) => id === bookId);
-
-    if (!book && fullBook) {
-      book = fullBook;
-    } else if (fullBook) {
-      book = { ...book, ...fullBook };
-    }
-  }
+  const onSave = () => actions.saveBookFromList(book);
+  const onRemove = () => actions.removeBook(book);
 
   if (!book) {
     return (
@@ -87,21 +61,15 @@ export default function BookDetails({ books, bookId, actions, saved }) {
     );
   }
 
-  const coverImageURL = book.book_image || book.image_url;
-  const onSave = () => actions.saveBookFromList(book);
-  const onRemove = () => actions.removeBook(book);
-
   return (
     <StyledPage>
       <div>
-        <Cover>
-          {coverImageURL ? (
-            <img src={coverImageURL} alt={book.title} />
-          ) : (
-            <Icon icon="book-open" />
-          )}
-        </Cover>
-        <StyledSaveButton onSave={onSave} onRemove={onRemove} saved={isSaved} />
+        <BookCover imgUrl={book.book_image} alt={book.title} />
+        <StyledSaveButton
+          onSave={onSave}
+          onRemove={onRemove}
+          saved={book.isSaved}
+        />
       </div>
       <h1>{book.title.toLowerCase()}</h1>
       <Author>{book.author}</Author>
