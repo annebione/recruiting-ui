@@ -23,6 +23,19 @@ describe('The main reducer', () => {
     ]);
   });
 
+  it('should show an error if books failed to load', () => {
+    expect(
+      reducer(initialState, {
+        type: types.BOOKS_LOAD_ERROR,
+        error: {
+          message: 'Failed to fetch books',
+        },
+      }).error
+    ).toEqual({
+      message: 'Failed to fetch books',
+    });
+  });
+
   it('should load books lists', () => {
     expect(
       reducer(initialState, {
@@ -48,6 +61,19 @@ describe('The main reducer', () => {
         list_name_encoded: 'hardcover-fiction',
       },
     ]);
+  });
+
+  it('should show an error if lists failed to load', () => {
+    expect(
+      reducer(initialState, {
+        type: types.LISTS_LOAD_ERROR,
+        error: {
+          message: 'Failed to fetch lists',
+        },
+      }).error
+    ).toEqual({
+      message: 'Failed to fetch lists',
+    });
   });
 
   it('should add a custom book', () => {
