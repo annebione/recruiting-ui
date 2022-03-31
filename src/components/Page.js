@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { Link } from '@reach/router';
+
+import { displayTypes } from 'constants/display-types';
+
 import Icon from './Icon';
 
 const Wrapper = styled.div`
@@ -72,7 +75,7 @@ export default function Page({ className, pageTitle, filters, children }) {
         {filters && (
           <Filters>
             {filters}{' '}
-            {view === 'list' ? (
+            {view === displayTypes.LIST ? (
               <FlexGroup>
                 <ActiveLink>
                   <Icon icon="th-list" />

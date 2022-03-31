@@ -1,9 +1,11 @@
+import { BOOK_ADDED, BOOK_REMOVED } from 'constants/action-types';
+
 export const addBook = book => ({
-  type: 'book_added',
+  type: BOOK_ADDED,
   book,
 });
 
 export const removeBook = book => ({
-  type: 'book_removed',
+  type: BOOK_REMOVED,
   book,
 });
