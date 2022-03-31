@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
-
 import { Link } from '@reach/router';
+
+import { displayTypes } from 'constants/display-types';
+
 import { SaveButton } from './Buttons';
 import BookCover from './BookCover';
 
@@ -24,7 +26,7 @@ const Wrapper = styled.article`
   padding: 50px 10px;
 
   ${({ view }) => {
-    if (view === 'list') {
+    if (view === displayTypes.LIST) {
       return `
         align-items: flex-start;
         width: 100%;
@@ -88,7 +90,7 @@ export default function Book({ book, onSave, onRemove, saved, view }) {
           <Anchor to={`/books/${id}`}>{title.toLowerCase()}</Anchor>
         </Title>
         <Author>{author}</Author>
-        {view === 'list' && <Description>{description}</Description>}
+        {view === displayTypes.LIST && <Description>{description}</Description>}
         <SaveButton onSave={onSave} onRemove={onRemove} saved={saved} />
       </Details>
     </Wrapper>

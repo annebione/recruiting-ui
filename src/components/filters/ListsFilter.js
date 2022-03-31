@@ -15,7 +15,6 @@ export const ListsFilter = ({ actions, defaultValue, onChange }) => {
     <select
       onChange={onChangeHandler}
       value={defaultValue}
-      key="lists"
       data-testid="lists-filter"
     >
       {lists &&
